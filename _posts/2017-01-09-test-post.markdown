@@ -1,7 +1,7 @@
 ---
 layout: post
-title:  "게시물 테스트입니다."
+title:  "Test post"
 date:   2017-01-09 16:19:13 +0530
 categories: jekyll update
 ---
-게시물 확인을 위한 테스트용 게시글입니다.
+Test
