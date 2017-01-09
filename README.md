@@ -1,47 +1,35 @@
-# Webjeda Gatok Theme
+# taken
 
-[**Demo**](http://webjeda.com/gatok)
+Taken is a minimalist two-column jekyll theme based on chapter tumblr theme 
 
-# Installation: 
-Fork the ``master`` branch and delete ``gh-pages`` branch in it. This is important because ``gh-pages`` branch is used here only to host the blog. You should be using the master branch as the source and create a fresh ``gh-pages`` branch.
+![Taken](https://github.com/vfalanis/taken/blob/master/Taken.png)
 
-Watch my video on instlallation
-<iframe width="100%" height="360" src="https://www.youtube.com/embed/T2nx6tj-ZH4?rel=0" frameborder="0" allowfullscreen></iframe>
+## Updates
 
-## How to delete old **gh-pages** branch?
-After forking the repository, click on **branches**.
+Note: There's a stable branch (v1.0) which includes the default taken theme.
+Master and gh-pages branch now include the latest changes:
 
-![delete gh-pages branch](http://blog.webjeda.com/images/delete-github-branch.png)
-
-Delete ``gh-pages`` branch.
-![delete gh-pages branch](http://blog.webjeda.com/images/delete-github-branch-2.png)
-
-You have to create a new ``gh-pages`` branch using the master branch. Go back to the forked repository and create ``gh-pages`` branch.
-
-![create gh-pages branch](http://blog.webjeda.com/images/create-gh-pages-branch.JPG)
-
-Now, go to settings and check the **Github Pages** section. You should see a URL where the blog is hosted.
-
-This process will host the theme as a **Project Page**. You can also download the files for local development. 
-
-Default theme will look like this
-
-![webjeda gatok jekyll theme](/images/webjeda-gatok-jekyll-theme-screenshot-1.png)
-
-Hover on the left side for a 3d sidebar!
-
-![webjeda gatok jekyll theme sidebar](/images/webjeda-gatok-jekyll-theme-screenshot.jpg)
+* Better responsive support ( sidebar collapse)
+* Fade in animations
 
 
-This theme is responsive.
+## Features
+* Flickr feed
+* Disqus
+* more ...
 
-![webjeda gatok responsive jekyll theme](/images/webjeda-gatok-jekyll-theme-screenshot-2.png)
+## Demo
+You can see a live demo of "taken" [here](http://vfalanis.github.io/taken)
 
+## Instructions
 
+1. Fork this repository
+2. Clone the repository to your computer.<br />`git clone https://github.com/YOURUSERNAME/taken.git` 
+3. Run it.<br />`jekyll serve`
+4. Go to http://127.0.0.1:4000.
 
-# Development
-Make changes to the **master** branch and create a pull request. Do not use **gh-pages** branch as it is used to host the theme.
-
-
-# License
-Read LICENSE file
+## To do list:
+* Categories support
+* Add portfolio section
+* Flickr plugin animation and configuration
+* More...

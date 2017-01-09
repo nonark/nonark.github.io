@@ -1,32 +1,33 @@
----
----
 <!DOCTYPE html>
 <html>
 
-{% include head.html %}
+  {% include head.html %}
 
   <body>
 
-        {% include sidebar.html %}
-        <div class="menu-icon"></div>
-      <div class="contents">
-        {% include header.html %}
+    {% include sidebar.html %}
+      
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-2.x-git.min.js"></script>
+      
+    <!-- Bootstrap Core JavaScript -->
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 
-      <div class="page-content">
-          <div class="wrapper">
-            {{ content }}
-          </div>
-      </div>
+    <script src="{{ site.baseurl }}/js/index.js"></script>
 
-{% include footer.html %}
-      </div>
+  </body>
 
-{% include 3d-menu.html %}
+    <script>
+    $("#menu-toggle").click(function(e) {
+        e.preventDefault();
+        $("#wrapper").toggleClass("toggled");
+    });
+    </script>
+    
+    <script>
+    $(document).ready(function(){
+    $('#page-content-wrapper').fadeIn();
+    });
+    </script>
 
-
-{% if site.analytics %}
- {% include analytics.html %}
-{% endif %}
-
-</body>
 </html>
