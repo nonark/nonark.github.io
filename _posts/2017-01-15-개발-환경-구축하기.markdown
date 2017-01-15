@@ -4,7 +4,7 @@
 
 * 오라클 홈페이지(java.oracle.com) 접속
 
-![](/image/img1.JPG)
+![](image/img1.JPG)
 
 * 우측 목록 Top Downloads에서 Java SE 선택
 
