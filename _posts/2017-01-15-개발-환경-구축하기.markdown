@@ -47,6 +47,27 @@
 
 * 압축 해제 후 사용, 이 때 압축해제 프로그램에 따라서 Path 길이에 의해 압축해제가 안될 가능성이 발생하기 때문에 드라이브 내에 푸는 것을 권장
 
+##톰캣(Tomcat) 설치
+
+* 아파치 홈페이지(tomcat.apache.org) 접속
+* Tomcat 8 선택
+
+![](/image/img10.JPG)
+
+* Mirrors 에서 다운받을 주소 선택
+* Binary Distributions 에서 운영체제에 맞는 Tomcat 다운로드
+
+![](/image/img11.JPG)
+
+* STS 에서 Window -> Preferences 선택
+* Preferences에서 Sever -> Runtime Environments 클릭
+* "Add" 클릭 후, Apache -> Tomcat 8.5 선택 후 Next
+
+![](/image/img12.JPG)
+
+* Tomcat installation directory에서 Tomcat이 설치된 경로를 입력후 Finish 클릭
+
+![](/image/img13.JPG)
 
 ## 인용한 서적 / 홈페이지
 >[참조 : 자바 웹 개발 워크북]
