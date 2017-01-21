@@ -1,0 +1,151 @@
+
+
+#Daum API를 사용해서 지형정보 서비스하기
+
+##개요
+
+프로젝트 기획단계에서 모임을 등록할 때 위치에 대한 정보를 입력해서 Daum 지도로 보여주기로 결정이 되었다.
+그래서 이번에는 모임 등록페이지와 팝업창에서 어떤 방식으로 사용했는 지에 대해서 서술한다.
+
+![](/image/20170121_img0.JPG)
+*모임 상세 페이지에서의 지도보기*
+
+##Daum API 키 생성하기
+
+Daum API 키를 발급받는 것은 간단하다. 가장 먼저 Daum Map API 홈페이지(http://apis.map.daum.net/)에 접속해서 우측 상단의 API Key 발급버튼을 클릭한다.
+
+![](/image/20170121_img1.JPG)
+
+<br>
+그 이후에 "앱 만들기" 버튼을 누르면 API를 사용하기 위한 앱을 생성할 수 있다. API Key는 사용의 편의를 위해 모든 플랫폼에서 접근이 가능하도록 설정했다.
+
+![](/image/20170121_img2.JPG)
+*앱에서 생성된 키*
+
+##지도 생성하기
+
+간단한 지도를 생성하는 방법은 Daum API Sample 코드에 있는 지도생성 코드를 사용해서 테스트를 한다.
+
+html+javascript 코드
+```{.html}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>지도 생성하기</title>
+    
+</head>
+<body>
+<!-- 지도를 표시할 div 입니다 -->
+<div id="map" style="width:100%;height:350px;"></div>
+
+<script type="text/javascript" src="//apis.daum.net/maps/maps3.js?apikey=발급받은 API KEY를 사용하세요"></script>
+<script>
+var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+    mapOption = { 
+        center: new daum.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+        level: 3 // 지도의 확대 레벨
+    };
+
+// 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
+var map = new daum.maps.Map(mapContainer, mapOption); 
+</script>
+</body>
+</html>
+```
+>출처 : Daum Map API Sample Code(지도 출력하기)
+
+Daum 지도를 생성할 때 HTML에서 지형이 생성될 위치(mapContainer)와 지도가 가장 먼저 보여줄 화면에 대한 정보(mapOption)을 인자로 받는다. 지도의 경우 단순히 파일의 형태로 실행할 경우 접속이 되지 않으니 Tomcat으로 구동시킨 후 확인하자
+
+##Marker 사용하기
+
+이번 프로젝트에서 사용해야 할 기능은 모임의 장소를 검색하면 연관된 검색장소가 리스트로 출력되고 그 중에서 사용자가 선택하는 시스템이다. 그래서 장소를 검색하는 함수와 마커를 찍는 함수가 반드시 필요하다.
+
+![](/image/20170121_img10.JPG)
+
+
+가장 먼저 필요한 것은 주소로 장소를 출력하는 기능이 필요하다. 이때 가장 중요한 것은 Map을 사용할 때 API 키 뒤에 'src="//apis.daum.net/maps/maps3.js?apikey=발급받은 API KEY를 사용하세요&libraries=services">' 형태처럼 &libraries=services를 반드시 붙여야 한다. 이 부분이 없으면 Daum Map의 서비스와 관련된 함수를 호출할 수 없어서 검색기능을 이용할 수 없다.
+
+Javascript 코드
+```{.javascript}
+var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+    mapOption = {
+        center: new daum.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+        level: 3 // 지도의 확대 레벨
+    };  
+
+// 지도를 생성합니다    
+var map = new daum.maps.Map(mapContainer, mapOption); 
+
+// 주소-좌표 변환 객체를 생성합니다
+var geocoder = new daum.maps.services.Geocoder();
+
+// 주소로 좌표를 검색합니다
+geocoder.addr2coord('제주특별자치도 제주시 첨단로 242', function(status, result) {
+
+    // 정상적으로 검색이 완료됐으면 
+     if (status === daum.maps.services.Status.OK) {
+
+        var coords = new daum.maps.LatLng(result.addr[0].lat, result.addr[0].lng);
+
+        // 결과값으로 받은 위치를 마커로 표시합니다
+        var marker = new daum.maps.Marker({
+            map: map,
+            position: coords
+        });
+
+        // 인포윈도우로 장소에 대한 설명을 표시합니다
+        var infowindow = new daum.maps.InfoWindow({
+            content: '<div style="width:150px;text-align:center;padding:6px 0;">우리회사</div>'
+        });
+        infowindow.open(map, marker);
+
+        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+        map.setCenter(coords);
+    } 
+});    
+```
+>출처 : Daip Map API Sample Code(주소로 장소 출력하기)
+
+이 부분에서 참고해야 할 사항으로는 현재 국내에서 사용하고 있는 도로명주소와 지번주소 중 어느쪽이 더 좋은가에 대한 부분이다. 사용된 기간이 긴 지번주소가 편할 수 있지만, Daum Map의 API를 통해서 사용해보면 지번주소는 오차가 발생하는 경우가 잦다. 따라서 Daum Map API를 사용해서 주소를 저장해야 할 필요가 있다면 도로명 주소를 사용하는 편이 좀 더 정확한 값을 저장할 수 있다.
+
+그리고 주소를 검색할 때 "XX동 XX호"와 같이 상세주소의 경우에는 API에서 검색을 하지 못하기 때문에 정확한 정보가 필요한 경우에는 상세 정보라는 별도의 입력공간을 만드는 것을 추천한다.
+
+![](/image/20170121_img3.JPG)
+*지번으로 검색했을 때의 검색결과. 같은 지번을 가지지만 도로명주소는 서로 다른 것을 확인할 수 있다*
+
+##팝업창 만들기
+
+API를 사용해서 모임등록에 대한 기능은 구현을 했지만, 모임수정페이지의 경우 주소를 수정하기 위한 별도의 팝업창이 필요하다. 따라서, 팝업창에서 입력받은 정보를 즉시 반영할 수 있어야 한다.
+
+###부모창 만들기
+
+부모창에서 자식창(팝업)을 만드는 방법은 Javascript로 "window.open"이라는 함수를 통해 생성할 수 있다. html 태그 내에 특정 이벤트를 추가하여 팝업창을 띄우는 함수를 호출하게 만든다.
+
+```{.javascript}
+function open_win(){
+	  window.open("popup.jsp", "popup", "width=700, height=700, left=0, top=0, 
+            toolbar=no, location=no, directories=no, status=no, menubar=no, resizable=no, scrollbars=no, copyhistory=no");
+	  updateLocation();
+  }
+```
+
+###자식창(팝업) 만들기
+
+자식창의 경우 모든 정보를 입력하고 "수정" 버튼을 누르면 부모창의 내용이 수정되어야 한다. "$(opener.document)를 사용하면 자식창에서 부모창에 접근할 수 있으며, find 함수를 통해 부모창에 설정한 id정보를 수정할 수 있다. 부모창의 모든 정보가 수정되면, 수정된 정보에 맞게 지형정보를 수정해야 하기 때문에 "window.opener.함수명"을 통해 부모의 함수를 호출해서 지도의 위치를 수정된 정보로 변경한다.
+
+모든 과정이 끝나면 "self.close()" 함수를 통해 팝업창을 종료한다.
+
+```{.javascript}
+function act() {
+	  $(opener.document).find("#title").val($("#title").val());
+	  $(opener.document).find("#keyword").val($("#keyword").val());
+	  $(opener.document).find("#location").val($("#location").val());
+	  $(opener.document).find("#detail").val($("#detail").val());
+	  window.opener.updateLocation();
+	  self.close();
+  }
+```
+
+## 인용한 서적 / 홈페이지
+>[참조, 인용 : Daum Map API 설명서, Sample 코드]
