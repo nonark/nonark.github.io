@@ -8,7 +8,7 @@
 | Queue | 여러 개의 객체를 담아서 순서대로 처리하기 위한 인터페이스, List에 비해 첫 번째 요소를 제거하는 데 걸리는 시간이 짧음 |
 
 ### reflection API 를 이용하여 매개변수로 넘어온 클래스의 종류 및 메소드 목록을 출력하는 메소드를 작성하시오(Story7 - Page 120).
-```
+```java
 package test.test.reflection;
 
 import java.lang.reflect.Field;
@@ -189,7 +189,7 @@ JMH를 사용한 List, Map 클래스의 성능 비교에 앞서 테스트 방식
 
 * 추가과정 (Story4 - Page 72)
 
-```
+```java
 package test.collection.test;
 
 import java.util.ArrayList;
@@ -263,7 +263,7 @@ public class MyBenchmark
 
 * 조회과정 (Story4 - Page 74)
 
-```
+```java
 package test.collection.test;
 
 import java.util.ArrayList;
@@ -359,7 +359,7 @@ public class MyBenchmark
 
 * 삭제과정 (Story4 - Page 76)
 
-```
+```java
 package test.collection.test;
 
 import java.util.ArrayList;
@@ -476,7 +476,7 @@ public class MyBenchmark
 
 * 추가과정
 
-```
+```java
 package test.collection.test;
 import java.util.HashMap;
 import java.util.Hashtable;
@@ -618,7 +618,7 @@ public class MyBenchmark
 
 * 조회과정 (Story4 - Page 81)
 
-```
+```java
 package test.collection.test;
 import java.util.HashMap;
 import java.util.Hashtable;
@@ -762,7 +762,7 @@ public class MyBenchmark
 
 * 삭제과정
 
-```
+```java
 package test.collection.test;
 import java.util.HashMap;
 import java.util.Hashtable;
