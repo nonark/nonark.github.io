@@ -101,6 +101,8 @@ public class ClassInfo
 
 ```
 
+
+#### 출력결과
 ```
 Class Name: test.test.reflection.TestClass
 Class Canonical Name: test.test.reflection.TestClass
